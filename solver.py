@@ -66,14 +66,14 @@ class Solver(object):
         t2 = time.time()
         print('step %d, loss = %.2f (%.1f examples/sec; %.3f sec/batch)' % ((iters, loss, self.batch_size/(t2-t1), (t2-t1))))
         iters += 1
-        if iters % 10 == 0:
+        if iters % 5 == 0:
           summary_str = sess.run(summary_op, feed_dict={self.net.train: True})
           summary_writer.add_summary(summary_str, iters)
-        if iters % 1000 == 0:
+        if iters % 100 == 0:
           #self.sample(sess, mu=1.0, step=iters)
           self.sample(sess, mu=1.1, step=iters)
           #self.sample(sess, mu=100, step=iters)
-        if iters % 10000 == 0:
+        if iters % 1000 == 0:
           checkpoint_path = os.path.join(self.train_dir, 'model.ckpt')
           saver.save(sess, checkpoint_path, global_step=iters)
     except tf.errors.OutOfRangeError:
